@@ -1,35 +1,19 @@
 <template>  
   <v-container grid-list-lg class="ma-0 pa-0">
-    <v-card flat>            
-      <v-card-text class="pa-0">
-        <v-autocomplete outlined hide-no-data clearable rounded hide-details
-          v-model="package_id"
-          label="Package"
-          :items="packages"
-          item-text="code"
-          item-value="code"
-          @keyup="packageSearch"
-          :loading="packageLoading"
-          style="width:300px"
-          class="mx-auto mb-4"
-        >
-          <template v-slot:item="data">
-            <template v-if="typeof data.item !== 'object'">
-              <v-list-item-content v-text="data.item"></v-list-item-content>
-            </template>
-            <template v-else>
-              <v-list-item-content>
-                <v-list-item-title v-html="data.item.code"></v-list-item-title>
-                <v-list-item-subtitle><small>{{data.item.nodeFrom.name}} - {{data.item.nodeTo.name}}</small></v-list-item-subtitle>
-              </v-list-item-content>
-            </template>
-          </template>
-        </v-autocomplete>
-        <template v-if="package_id && packages.find(x=>x.code==package_id)">        
-          <v-card                                                
-            outlined
-            :set="s = packages.find(x=>x.code==package_id)"
-          >
+    <v-card flat>
+      <v-card-text>
+        <v-text-field v-model="package_id" @input="searchPackage" style="max-width:300px" class="mx-auto" placeholder="No Resi"></v-text-field>             
+      </v-card-text>                       
+      <v-card-text v-if="loading" class="pa-0">
+        <v-skeleton-loader
+          ref="skeleton"
+          type="list-item-avatar-three-line"
+          class="mx-auto"
+        ></v-skeleton-loader>
+      </v-card-text>             
+      <v-card-text v-else class="pa-0">  
+       <template v-if="packages.find(x=>x.code==package_id)">        
+          <v-card outlined :set="s = packages.find(x=>x.code==package_id)">
             <v-layout row>
               <v-flex xs12 md12>
                   <v-list-item three-line>
@@ -92,14 +76,7 @@
               <v-list-item-subtitle>please search your package first</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>  
-        </v-card>             
-      </v-card-text>
-      <v-card-text v-if="loading"  class="pa-0">
-         <v-skeleton-loader
-          ref="skeleton"
-          type="list-item-avatar-three-line"
-          class="mx-auto"
-        ></v-skeleton-loader>
+        </v-card>                     
       </v-card-text>      
     </v-card>    
   </v-container>    
@@ -120,13 +97,21 @@ export default {
     tracking : {}, 
     center : {lat:-1.796497, lng:119.640654},
     place : null, loading : false,
+    s : {},    
   }),
   computed:{
     
   },
   watch:{
-    package_id(newId){                  
-      this.tracking = {};   
+
+  },  
+  mounted(){
+    
+  },
+  methods: {
+    searchPackage: debounce(function(e){
+      this.tracking = {};         
+      let newId = e;
       if(newId){      
         this.loading = true;  
         model.trackPackage({resi:newId},{}, {Authorization: "Bearer " + this.apikey}).then(res=>{
@@ -144,12 +129,7 @@ export default {
           this.loading = false;
         });
       }
-    },
-  },  
-  mounted(){
-    
-  },
-  methods: {
+    }, 400),
 
     packageSearch: debounce(function (e) { 
       this.packageLoading = true;     
@@ -181,5 +161,11 @@ export default {
 .tb-normal td, .tb-normal th {
   border: 1px solid #ddd;
   padding: 4px 6px;
+}
+
+input{
+  border:1px solid #000 !important;
+  margin-top:30px !important;
+  padding-top:10px 0px !important;
 }
 </style>

@@ -8,7 +8,7 @@ let baseUrl = 'https://api.geblogistics.co.id/index.php/';
 //let AndroidOrigin = st.getSettings('AndroidOrigin');
 
 export default {   
-    rest    :  baseUrl+'v1/',          
+    rest    :  baseUrl+'v1/',
     title   :  /*st.getSettings('title')?st.getSettings('title'):*/'GEB Logistic',
     prefix  :  'geb',
     

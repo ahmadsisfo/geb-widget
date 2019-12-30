@@ -1,7 +1,7 @@
 import Model  from '@/utils/models';
 
 export default class Widget extends Model { 
-    backend = '/package/';    
+    backend = '/widget/';    
 
     calculateTarif(body, params={}, headers={}){
         return this.api.post(this.backend+'calculate-tarif', body, params, headers);
@@ -18,7 +18,7 @@ export default class Widget extends Model {
     }
 
     packages(params={}, headers={}){
-        return this.api.get(this.backend+'index', params, headers).then(res => {          
+        return this.api.get('/package/index', params, headers).then(res => {          
             return res.status == 200 ? res.data : {};
         });
     }
