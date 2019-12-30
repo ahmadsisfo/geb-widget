@@ -12,8 +12,8 @@ module.exports = {
       })
     ],    
     output: {
-      filename: 'app.0.0.1.js', 
-      chunkFilename: 'app.0.0.1.js',
+      filename: 'app.0.0.2.js', 
+      chunkFilename: 'app.0.0.2.js',
     }
   },
   chainWebpack:
