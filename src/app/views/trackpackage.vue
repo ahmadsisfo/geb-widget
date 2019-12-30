@@ -2,7 +2,7 @@
   <v-container grid-list-lg class="ma-0 pa-0">
     <v-card flat>
       <v-card-text  class="pa-0">
-        <input v-model="package_id" style="width:100%" @input="searchPackage" class="mx-auto" placeholder="No Resi" />
+        <v-text-field v-model="package_id" autocomplete="off" style="width:100%" @input="searchPackage" class="mx-auto" placeholder="No Resi" />
       </v-card-text>                       
       <v-card-text v-if="loading" class="pa-0">
         <v-skeleton-loader
@@ -162,5 +162,35 @@ export default {
   border: 1px solid #ddd;
   padding: 4px 6px;
 }
-
+.v-text-field > .v-input__control > .v-input__slot:before {
+    border-style: none;
+    border-top-style: none;
+    border-right-style: none;
+    border-bottom-style: none;
+    border-left-style: none;
+    border-width: thin 0 0 0;
+    border-top-width: thin;
+    border-right-width: 0px;
+    border-bottom-width: 0px;
+    border-left-width: 0px;
+}
+.v-text-field > .v-input__control > .v-input__slot:after {
+    border-color: currentColor;
+    border-top-color: currentcolor;
+    border-right-color: currentcolor;
+    border-bottom-color: currentcolor;
+    border-left-color: currentcolor;
+    border-style: none;
+    border-top-style: none;
+    border-right-style: none;
+    border-bottom-style: none;
+    border-left-style: none;
+    border-width: thin 0 thin 0;
+    border-top-width: thin;
+    border-right-width: 0px;
+    border-bottom-width: thin;
+    border-left-width: 0px;
+    -webkit-transform: scaleX(0);
+    transform: scaleX(0);
+}
 </style>
