@@ -12,8 +12,8 @@ module.exports = {
       })
     ],    
     output: {
-      filename: 'app.0.0.2.js', 
-      chunkFilename: 'app.0.0.2.js',
+      filename: 'app.0.0.3.js', 
+      chunkFilename: 'app.0.0.3.js',
     }
   },
   chainWebpack:
@@ -23,8 +23,8 @@ module.exports = {
         extractCSSPlugin &&
           extractCSSPlugin.tap(() => [
             {
-              filename: 'app.0.0.2.css',
-              chunkFilename: 'app.0.0.2.css'
+              filename: 'app.0.0.3.css',
+              chunkFilename: 'app.0.0.3.css'
             }
           ]);
       }

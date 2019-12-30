@@ -2,7 +2,7 @@
   <v-container grid-list-lg class="ma-0 pa-0">
     <v-card flat>
       <v-card-text  class="pa-0">
-        <v-text-field v-model="package_id" @input="searchPackage" class="mx-auto" placeholder="No Resi"></v-text-field>             
+        <input v-model="package_id" style="width:100%" @input="searchPackage" class="mx-auto" placeholder="No Resi" />
       </v-card-text>                       
       <v-card-text v-if="loading" class="pa-0">
         <v-skeleton-loader
