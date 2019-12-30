@@ -23,8 +23,8 @@ module.exports = {
         extractCSSPlugin &&
           extractCSSPlugin.tap(() => [
             {
-              filename: 'app.0.0.1.css',
-              chunkFilename: 'app.0.0.1.css'
+              filename: 'app.0.0.2.css',
+              chunkFilename: 'app.0.0.2.css'
             }
           ]);
       }

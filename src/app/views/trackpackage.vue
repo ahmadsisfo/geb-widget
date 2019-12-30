@@ -1,8 +1,8 @@
 <template>  
   <v-container grid-list-lg class="ma-0 pa-0">
     <v-card flat>
-      <v-card-text>
-        <v-text-field v-model="package_id" @input="searchPackage" style="max-width:300px" class="mx-auto" placeholder="No Resi"></v-text-field>             
+      <v-card-text  class="pa-0">
+        <v-text-field v-model="package_id" @input="searchPackage" class="mx-auto" placeholder="No Resi"></v-text-field>             
       </v-card-text>                       
       <v-card-text v-if="loading" class="pa-0">
         <v-skeleton-loader
@@ -163,9 +163,4 @@ export default {
   padding: 4px 6px;
 }
 
-input{
-  border:1px solid #000 !important;
-  margin-top:30px !important;
-  padding-top:10px 0px !important;
-}
 </style>
