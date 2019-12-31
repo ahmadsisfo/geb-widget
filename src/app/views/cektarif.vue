@@ -16,6 +16,7 @@
                 :loading="nodesFromLoading"
                 :error="!!error.node_from.length"
                 :error-messages="error.node_from"
+                style="width:100%"
               >
                 <template v-slot:item="data">                
                   <template>
@@ -39,6 +40,7 @@
                 :loading="nodesToLoading"
                 :error="!!error.node_to.length"
                 :error-messages="error.node_to"
+                style="width:100%"
               >
                 <template v-slot:item="data">
                   <template>
