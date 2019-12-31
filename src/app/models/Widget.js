@@ -31,8 +31,8 @@ export default class Widget extends Model {
         });
     }
 
-    products(){
-        return this.api.get(this.backend+'products').then(res => {          
+    products(params={}, headers={}){
+        return this.api.get(this.backend+'products', params, headers).then(res => {          
             return res.status == 200 ? res.data : {};
         });
     }
