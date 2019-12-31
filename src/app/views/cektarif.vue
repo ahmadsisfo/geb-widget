@@ -5,9 +5,9 @@
         <v-form @submit.prevent="onsubmit">
           <v-layout row>
             <v-flex xs6>
-              <v-autocomplete outlined dense hide-no-data hide-details
+              <v-autocomplete hide-no-data hide-details clearable
                 v-model="fm.node_from"
-                label="Node From"
+                placeholder="Asal"
                 :items="nodesFrom"
                 item-text="name"
                 item-value="id"
@@ -28,9 +28,9 @@
               </v-autocomplete>   
             </v-flex>
             <v-flex xs6>  
-              <v-autocomplete outlined dense hide-no-data hide-details
+              <v-autocomplete hide-no-data hide-details clearable
                 v-model="fm.node_to"
-                label="Node To"
+                placeholder="Tujuan"
                 :items="nodesTo"
                 item-text="name"
                 item-value="id"
@@ -50,65 +50,10 @@
                 </template>
               </v-autocomplete>             
             </v-flex>
-            <v-flex xs6>
-              <v-select outlined dense hide-details
-                v-model="fm.product_id"
-                label="Product"
-                :items="products"
-                item-text="name"
-                item-value="id"
-                @change="onsubmit"
-                :error="!!error.product_id.length"
-                :error-messages="error.product_id"
-              ></v-select> 
+            <v-flex xs12>
+              <v-btn type="submit" :color="color" :loading="loading" dark>cek tarif</v-btn>
             </v-flex>
-            <v-flex xs6>
-              <v-text-field outlined dense hide-details
-                label="Weight"
-                type="number"
-                @input="fm.length = null; fm.width = null; fm.height = null;"
-                v-model="fm.weight"
-                :suffix="products.find(x=>x.id===fm.product_id)?products.find(x=>x.id===fm.product_id).satuan:''" 
-                :error="!!error.weight.length"
-                :error-messages="error.weight"              
-              />
-            </v-flex>
-            <v-flex xs12>  
-              <v-layout>
-                <v-flex xs3>
-                  <v-text-field outlined dense
-                    label="p (cm)"
-                    type="number"
-                    v-model="fm.length"                      
-                    :error="!!error.length.length"
-                    :error-messages="error.length"                      
-                  />  
-                </v-flex>
-                <v-flex xs3>
-                  <v-text-field outlined dense
-                    label="l (cm)"
-                    type="number"
-                    v-model="fm.width"                      
-                    :error="!!error.width.length"
-                    :error-messages="error.width"                      
-                  />  
-                </v-flex>
-                <v-flex xs3>
-                  <v-text-field outlined dense
-                    label="t (cm)"
-                    type="number"
-                    v-model="fm.height"                      
-                    :error="!!error.height.length"
-                    :error-messages="error.height"                      
-                  />  
-                </v-flex>
-                <v-flex xs3 class="text-right">
-                  <v-btn type="submit" :color="color" :loading="loading" dark>cek</v-btn>
-                </v-flex>
-              </v-layout>                        
-            </v-flex>          
-            <v-flex xs12>            
-              Result :   
+            <v-flex xs12>                            
               <v-card outlined class="my-2" v-if="loading">  
                 <v-skeleton-loader               
                   ref="skeleton"                
@@ -116,42 +61,33 @@
                   class="mx-auto"
                 ></v-skeleton-loader>
               </v-card>
-              <v-card outlined class="my-2" v-else>
-                <v-list-item three-line class="px-1" v-if="!fm.amount">
-                  <v-list-item-avatar tile size="80" class="my-1 mr-2" color="grey">                    
-                    
-                  </v-list-item-avatar>
-                  <v-list-item-content>
-                    <v-list-item-title class="headline mb-1">No Data Result</v-list-item-title>
-                    <v-list-item-subtitle>please filter your params</v-list-item-subtitle>
-                  </v-list-item-content>
-                </v-list-item>  
-                <v-list-item three-line class="px-1" v-else :set="prod = products.find(x=>x.id===fm.product_id)">
-                  <v-list-item-avatar tile size="80" class="my-1 mr-2" :color="getColor(prod.id)">                    
-                    <h1 class="white--text">{{prod.name}}</h1>
-                  </v-list-item-avatar>
-                  <v-list-item-content>
-                    <v-list-item-title class="headline mb-1 text-right pr-3"><strong>Rp{{ (fm.amount*fm.weight) | currency }}</strong></v-list-item-title>
-                    <v-list-item-subtitle class="text-right body-1 pr-3">qty : {{fm.weight | currency}} {{prod.satuan}}</v-list-item-subtitle>
-                  </v-list-item-content>
-                </v-list-item>  
-              </v-card>
-              <template v-if="others.length > 0">  
-                Other products :                                              
-                <template v-for="(oth,i) in others">                
-                  <v-card class="my-1" outlined :key="i" v-if="oth.product_id !== fm.product_id">                    
-                    <v-list-item class="px-1" :set="prod = products.find(x=>x.id===oth.product_id)">
-                      <v-list-item-avatar tile size="60" class="my-1 mr-2" :color="getColor(prod.id)">                    
-                        <h3 class="white--text">{{prod.name}}</h3>
-                      </v-list-item-avatar>
-                      <v-list-item-content class="pa-0">
-                        <v-list-item-title class="title text-right mb-1 pr-3">Rp{{ (oth.price) | currency }}</v-list-item-title>
-                        <v-list-item-subtitle class="caption text-right pr-3">qty : {{'1' | currency}} {{prod.satuan}}</v-list-item-subtitle>
-                      </v-list-item-content>
-                    </v-list-item>  
-                  </v-card>
-                </template>  
-              </template>
+              <template v-else>
+                <v-card outlined class="my-2" v-if="others.length <= 0">
+                  <v-list-item three-line class="px-1" >
+                    <v-list-item-avatar tile size="80" class="my-1 mr-2" color="grey">                                        
+                    </v-list-item-avatar>
+                    <v-list-item-content>
+                      <v-list-item-title class="headline mb-1">No Data Result</v-list-item-title>
+                      <v-list-item-subtitle>please filter your params</v-list-item-subtitle>
+                    </v-list-item-content>
+                  </v-list-item>                  
+                </v-card>
+                <template v-else>                                                           
+                  <template v-for="(oth,i) in others">                
+                    <v-card class="my-1" outlined :key="i">                    
+                      <v-list-item class="px-1" :set="prod = products.find(x=>x.id===oth.product_id)">
+                        <v-list-item-avatar tile size="60" class="my-1 mr-2" :color="getColor(prod.id)">                    
+                          <h3 class="white--text">{{prod.name}}</h3>
+                        </v-list-item-avatar>
+                        <v-list-item-content class="pa-0">
+                          <v-list-item-title class="title text-right mb-1 pr-3">Rp{{ (oth.price) | currency }}</v-list-item-title>
+                          <v-list-item-subtitle class="caption text-right pr-3">qty : {{'1' | currency}} {{prod.satuan}}</v-list-item-subtitle>
+                        </v-list-item-content>
+                      </v-list-item>  
+                    </v-card>
+                  </template>  
+                </template>
+              </template> 
             </v-flex>
           </v-layout>
         </v-form>  
@@ -222,10 +158,14 @@ export default {
     onsubmit(){
       this.loading = true; this.fm.amount = null; 
       for(var i in this.error){this.error[i] = [];}
-      model.calculateTarif(this.fm, {}, {Authorization: "Bearer " + this.apikey}).then(res=>{this.responseSubmit(res)})
+      this.others = [];
       if(this.fm.node_from && this.fm.node_to){
-        model.tarifs({node_from:this.fm.node_from,node_to:this.fm.node_to},{Authorization: "Bearer " + this.apikey}).then(res=>{
-          this.others = res.data;
+        model.tarifs({node_from:this.fm.node_from,node_to:this.fm.node_to},{Authorization: "Bearer " + this.apikey}).then(res=>{          
+          this.others  = [];
+          if(Array.isArray(res.data)){
+            this.others  = res.data;
+          }          
+          this.loading = false;
         });
       }      
     },
@@ -248,5 +188,36 @@ export default {
 <style>
 .ramping td, .ramping th {
     padding: 0 5px;
+}
+.v-text-field > .v-input__control > .v-input__slot:before {
+    border-style: none;
+    border-top-style: none;
+    border-right-style: none;
+    border-bottom-style: none;
+    border-left-style: none;
+    border-width: thin 0 0 0;
+    border-top-width: thin;
+    border-right-width: 0px;
+    border-bottom-width: 0px;
+    border-left-width: 0px;
+}
+.v-text-field > .v-input__control > .v-input__slot:after {
+    border-color: currentColor;
+    border-top-color: currentcolor;
+    border-right-color: currentcolor;
+    border-bottom-color: currentcolor;
+    border-left-color: currentcolor;
+    border-style: none;
+    border-top-style: none;
+    border-right-style: none;
+    border-bottom-style: none;
+    border-left-style: none;
+    border-width: thin 0 thin 0;
+    border-top-width: thin;
+    border-right-width: 0px;
+    border-bottom-width: thin;
+    border-left-width: 0px;
+    -webkit-transform: scaleX(0);
+    transform: scaleX(0);
 }
 </style>

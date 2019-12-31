@@ -67,7 +67,7 @@
             </v-timeline-item>
           </v-timeline>              
         </template>
-        <v-card v-else class="mx-auto" max-width="444" outlined> 
+        <v-card v-else class="mx-auto" outlined> 
           <v-list-item three-line>
             <v-list-item-avatar tile size="80" color="grey">                    
             </v-list-item-avatar>

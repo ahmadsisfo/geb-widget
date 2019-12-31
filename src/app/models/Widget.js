@@ -1,11 +1,7 @@
 import Model  from '@/utils/models';
 
 export default class Widget extends Model { 
-    backend = '/widget/';    
-
-    calculateTarif(body, params={}, headers={}){
-        return this.api.post(this.backend+'calculate-tarif', body, params, headers);
-    }
+    backend = '/widget/';        
 
     trackPackage(body,params={}, headers={}){
         return this.api.post(this.backend+'track', body, params, headers);
@@ -24,19 +20,19 @@ export default class Widget extends Model {
     }
     
     nodes(params={}, headers={}){
-        return this.api.get('/node/index', params, headers).then(res => {          
+        return this.api.get(this.backend+'nodes', params, headers).then(res => {          
             return res.status == 200 ? res.data : {};
         });
-    }    
+    }        
 
-    products(params={}, headers={}){
-        return this.api.get('/product/index', params, headers).then(res => {          
+    tarifs(params={}, headers={}){
+        return this.api.get(this.backend+'tarifs', params, headers).then(res => {          
             return res.status == 200 ? res.data : {};
         });
     }
 
-    tarifs(params={}, headers={}){
-        return this.api.get('/tarif/index', params, headers).then(res => {          
+    products(){
+        return this.api.get(this.backend+'products').then(res => {          
             return res.status == 200 ? res.data : {};
         });
     }
