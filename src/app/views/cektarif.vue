@@ -222,4 +222,7 @@ export default {
     -webkit-transform: scaleX(0);
     transform: scaleX(0);
 }
+.v-input__append-inner{
+  display:none !important;
+}
 </style>
