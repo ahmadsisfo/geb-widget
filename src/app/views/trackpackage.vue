@@ -51,7 +51,8 @@
                   <span>{{ track.text }}</span>
                   <span v-if="track.office"><strong> {{track.office}}, </strong></span>
                   <span v-if="track.node"><strong> {{track.node}},  </strong></span>
-                  <span v-if="track.place"><strong> {{track.place}}  </strong></span>
+                  <span v-if="track.place"><strong> {{track.place}}.  </strong></span>
+                  <span v-if="track.lat && track.lng"><a target="_blank" :href="'https://www.google.com/maps/search/?api=1&amp;query='+track.lat+','+track.lng">Marker in google maps</a></span>
                 </div>
               </div>
             </v-timeline-item>
