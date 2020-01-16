@@ -22,7 +22,7 @@
                   </v-list-item-avatar>
                   
                   <v-list-item-content>
-                    <div class="overline mb-1">{{s.code}} <br/> <v-chip small :color="s.status==1?'green':'orange'">{{s.status ==1?'delivered':'proses'}}</v-chip> </div>                    
+                    <div class="overline mb-1">{{s.code}} <br/> <v-chip small dark :color="s.status==1?'green':(s.status ==2?'red':'orange')">{{s.status ==1?'delivered':(s.status==2?'returned':'process')}}</v-chip> </div>                    
                     <v-list-item-title class="headline mb-1">{{s.cnsg_name}}</v-list-item-title>
                     <v-list-item-subtitle class="caption">{{s.nodeFrom ? s.nodeFrom.name :''}} - {{s.nodeTo ? s.nodeTo.name: ''}}</v-list-item-subtitle>
                   </v-list-item-content>                             
@@ -35,7 +35,7 @@
               class="pb-2"
               v-for="(track, i) in tracking.tracks"
               :key="i"
-              :color="'green'"
+              :color="track.proses == 6 ? 'red':'green'"
               small
             >
               <template v-slot:opposite>
@@ -44,15 +44,23 @@
                 </span>-->
               </template>
               <div class="py-1" :set="sampai = track.proses == 5 ? true : false">
-                <h3 :class="`sub-title font-weight-light mb-1 green--text`">
+                <h3 :class="`sub-title font-weight-light mb-1 teal--text`" v-if="track.proses == 5">
+                  {{$moment(tracking.package.deliv_time*1000).format('ddd, DD MMM YYYY HH:mm')}}
+                </h3>
+                <h3 :class="`sub-title font-weight-light mb-1 red--text`" v-else-if="track.proses == 6">
+                    {{$moment(tracking.package.retur_time*1000).format('ddd, DD MMM YYYY HH:mm')}}
+                  </h3>
+                <h3 :class="`sub-title font-weight-light mb-1 green--text`" v-else>
                   {{$moment(track.end_time?track.end_time*1000:track.begin_time*1000).format('ddd, DD MMM YYYY HH:mm')}}
                 </h3>
                 <div>
                   <span>{{ track.text }}</span>
-                  <span v-if="track.office"><strong> {{track.office}}, </strong></span>
-                  <span v-if="track.node"><strong> {{track.node}},  </strong></span>
-                  <span v-if="track.place"><strong> {{track.place}}.  </strong></span>
-                  <span v-if="track.lat && track.lng"><a target="_blank" :href="'https://www.google.com/maps/search/?api=1&amp;query='+track.lat+','+track.lng">Marker in google maps</a></span>
+                    <span v-if="track.office"><strong> {{track.office}}, </strong></span>
+                    <span v-if="track.node"><strong> {{track.node}},  </strong></span>
+                    <span v-if="track.place"><strong> {{track.place}}.  </strong></span>
+                    <span v-if="track.lat && track.lng"><a target="_blank" :href="'https://www.google.com/maps/search/?api=1&amp;query='+track.lat+','+track.lng">Marker in google maps</a>. </span>
+                    <span v-if="track.proses == 5">Diterima oleh {{tracking.package.deliv_name}}</span>
+                    <span v-if="track.proses == 6">[{{tracking.package.retur_desc}}]. Info lebih lanjut hub admin kami. Terima Kasih.</span>
                 </div>
               </div>
             </v-timeline-item>
