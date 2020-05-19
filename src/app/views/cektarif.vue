@@ -78,7 +78,7 @@
                   <template v-for="(oth,i) in others">                
                     <v-card class="my-1" outlined :key="i">                    
                       <v-list-item class="px-1" :set="prod = products.find(x=>x.id===oth.product_id)">
-                        <v-list-item-avatar tile size="60" class="my-1 mr-2" :color="getColor(prod.id)">                    
+                        <v-list-item-avatar tile size="60" style="min-width:220px" class="my-1 mr-2" :color="getColor(prod.id)">                    
                           <h3 class="white--text">{{prod.name}}</h3>
                         </v-list-item-avatar>
                         <v-list-item-content class="pa-0">
