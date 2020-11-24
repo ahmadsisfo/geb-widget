@@ -2,7 +2,7 @@
 
 //let baseUrl = 'http://localhost/logistic/web/';
 //let baseUrl = 'http://103.41.204.222/api/web/index.php/';
-let baseUrl = 'https://api.geblogistics.co.id/index.php/';
+let baseUrl = 'https://api.geb.co.id/index.php/';
 
 
 //let AndroidOrigin = st.getSettings('AndroidOrigin');
