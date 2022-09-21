@@ -17,7 +17,7 @@
     "vue": "^2.6.10",
     "vue-currency-filter": "^3.4.3",
     "vue-custom-element": "^3.2.12",
-    "vuetify": "^2.1.0",
+    "vuetify": "^2.6.10",
     "webpack": "^4.41.4"
   },
   "devDependencies": {
